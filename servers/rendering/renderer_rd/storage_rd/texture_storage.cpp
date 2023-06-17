@@ -2557,7 +2557,10 @@ void TextureStorage::_update_render_target(RenderTarget *rt) {
 	if (rt->texture.is_null()) {
 		//create a placeholder until updated
 		rt->texture = texture_allocate();
-		texture_2d_placeholder_initialize(rt->texture);
+		// texture_2d_placeholder_initialize(rt->texture);
+    Ref<Image> image = Image::create_empty(4, 4, false, Image::FORMAT_RGBAF);
+    image->fill(Color(1, 0, 1, 1));
+    texture_2d_initialize(rt->texture, image);
 		Texture *tex = get_texture(rt->texture);
 		tex->is_render_target = true;
 	}
@@ -2570,7 +2573,10 @@ void TextureStorage::_update_render_target(RenderTarget *rt) {
 	//until we implement support for HDR monitors (and render target is attached to screen), this is enough.
 	rt->color_format = RD::DATA_FORMAT_R8G8B8A8_UNORM;
 	rt->color_format_srgb = RD::DATA_FORMAT_R8G8B8A8_SRGB;
+	rt->color_format = RD::DATA_FORMAT_R32G32B32A32_SFLOAT;
+	rt->color_format_srgb = RD::DATA_FORMAT_R32G32B32A32_SFLOAT;
 	rt->image_format = rt->is_transparent ? Image::FORMAT_RGBA8 : Image::FORMAT_RGB8;
+	rt->image_format = rt->is_transparent ? Image::FORMAT_RGBAF : Image::FORMAT_RGBF;
 
 	RD::TextureFormat rd_color_attachment_format;
 	RD::TextureView rd_view;
