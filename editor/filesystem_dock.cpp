@@ -2127,9 +2127,9 @@ void FileSystemDock::_file_option(int p_option, const Vector<String> &p_selected
 		} break;
 
 		case FILE_INHERIT: {
-			// Create a new scene inherited from the selected one.
-			if (p_selected.size() == 1) {
-				emit_signal(SNAME("inherit"), p_selected[0]);
+			// Create new scenes inherited from the selected ones.
+			for (int i = 0; i < p_selected.size(); i++) {
+				emit_signal(SNAME("inherit"), p_selected[i]);
 			}
 		} break;
 
@@ -2891,6 +2891,7 @@ void FileSystemDock::_file_and_folders_fill_popup(PopupMenu *p_popup, Vector<Str
 				}
 			} else {
 				p_popup->add_icon_item(get_editor_theme_icon(SNAME("Load")), TTR("Open Scenes"), FILE_OPEN);
+				p_popup->add_icon_item(get_editor_theme_icon(SNAME("CreateNewSceneFrom")), TTR("New Inherited Scenes"), FILE_INHERIT);
 			}
 			p_popup->add_icon_item(get_editor_theme_icon(SNAME("Instance")), TTR("Instantiate"), FILE_INSTANTIATE);
 			p_popup->add_separator();
