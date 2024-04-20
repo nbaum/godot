@@ -117,12 +117,13 @@ constexpr real_t ZOOM_FREELOOK_INDICATOR_DELAY_S = 1.5;
 
 #ifdef REAL_T_IS_DOUBLE
 constexpr double ZOOM_FREELOOK_MAX = 1'000'000'000'000;
+constexpr real_t MAX_Z = 1e12;
 #else
 constexpr float ZOOM_FREELOOK_MAX = 10'000;
+constexpr real_t MAX_Z = 1000000.0;
 #endif
 
 constexpr real_t MIN_Z = 0.01;
-constexpr real_t MAX_Z = 1000000.0;
 
 constexpr real_t MIN_FOV = 0.01;
 constexpr real_t MAX_FOV = 179;
