@@ -44,6 +44,7 @@
 #include "scene/3d/physics/collision_shape_3d.h"
 #include "scene/3d/sprite_3d.h"
 #include "scene/resources/surface_tool.h"
+#include "modules/csg/csg_shape.h"
 #endif // _3D_DISABLED
 #include "scene/gui/popup_menu.h"
 #include "scene/main/canvas_layer.h"
@@ -1899,6 +1900,15 @@ void RuntimeNodeSelect::_find_3d_items_at_pos(const Point2 &p_pos, Vector<Select
 				if (sprite) {
 					geo_instance = sprite;
 					mesh_collision = sprite->generate_triangle_mesh();
+        } else {
+				  CSGShape3D *csg = Object::cast_to<CSGShape3D>(obj);
+          if (csg) {
+            Ref<ArrayMesh> meshes = csg->bake_static_mesh();
+            if (meshes.is_valid()) {
+              geo_instance = csg;
+              mesh_collision = meshes->generate_triangle_mesh();
+            }
+          }
 				}
 			}
 		}
